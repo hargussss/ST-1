@@ -4,72 +4,64 @@
 #include <cstdint>
 #include "alg.h"
 
-// checkPrime tests
-TEST(checkPrimeTest, zeroIsNotPrime) {
+TEST(st1, checkPrime_small) {
+  EXPECT_TRUE(checkPrime(2));
+  EXPECT_TRUE(checkPrime(3));
+  EXPECT_FALSE(checkPrime(4));
+  EXPECT_FALSE(checkPrime(1));
   EXPECT_FALSE(checkPrime(0));
 }
 
-TEST(checkPrimeTest, oneIsNotPrime) {
-  EXPECT_FALSE(checkPrime(1));
-}
-
-TEST(checkPrimeTest, twoIsPrime) {
-  EXPECT_TRUE(checkPrime(2));
-}
-
-TEST(checkPrimeTest, threeIsPrime) {
-  EXPECT_TRUE(checkPrime(3));
-}
-
-TEST(checkPrimeTest, fourIsNotPrime) {
-  EXPECT_FALSE(checkPrime(4));
-}
-
-TEST(checkPrimeTest, largeComposite) {
+TEST(st1, checkPrime_composite) {
+  EXPECT_FALSE(checkPrime(15));
   EXPECT_FALSE(checkPrime(100));
+  EXPECT_TRUE(checkPrime(17));
+  EXPECT_TRUE(checkPrime(97));
 }
 
-TEST(checkPrimeTest, largePrime) {
-  EXPECT_TRUE(checkPrime(7919));
+TEST(st1, nPrime_first) {
+  EXPECT_EQ(2u, nPrime(1));
+  EXPECT_EQ(3u, nPrime(2));
+  EXPECT_EQ(5u, nPrime(3));
 }
 
-// nPrime tests
-TEST(nPrimeTest, firstPrime) {
-  EXPECT_EQ(2, nPrime(1));
+TEST(st1, nPrime_later) {
+  EXPECT_EQ(13u, nPrime(6));
+  EXPECT_EQ(29u, nPrime(10));
+  EXPECT_EQ(541u, nPrime(100));
 }
 
-TEST(nPrimeTest, secondPrime) {
-  EXPECT_EQ(3, nPrime(2));
+TEST(st1, nextPrime_basic) {
+  EXPECT_EQ(5u, nextPrime(4));
+  EXPECT_EQ(13u, nextPrime(11));
+  EXPECT_EQ(3u, nextPrime(2));
 }
 
-TEST(nPrimeTest, sixthPrime) {
-  EXPECT_EQ(13, nPrime(6));
+TEST(st1, nextPrime_larger) {
+  EXPECT_EQ(17u, nextPrime(14));
+  EXPECT_EQ(23u, nextPrime(20));
+  EXPECT_EQ(7919u, nextPrime(7918));
 }
 
-// nextPrime tests
-TEST(nextPrimeTest, nextAfterFour) {
-  EXPECT_EQ(5, nextPrime(4));
-}
-
-TEST(nextPrimeTest, nextAfterPrime) {
-  EXPECT_EQ(13, nextPrime(11));
-}
-
-TEST(nextPrimeTest, nextAfterOne) {
-  EXPECT_EQ(2, nextPrime(1));
-}
-
-// sumPrime tests
-TEST(sumPrimeTest, sumBelow2) {
+TEST(st1, sumPrime_small) {
   EXPECT_EQ(0u, sumPrime(2));
+  EXPECT_EQ(2u, sumPrime(3));
+  EXPECT_EQ(5u, sumPrime(5));
 }
 
-TEST(sumPrimeTest, sumBelow10) {
-  uint64_t expected = 17;  // 2+3+5+7
-  EXPECT_EQ(expected, sumPrime(10));
+TEST(st1, sumPrime2) {
+  uint64_t res = sumPrime(10);
+  uint64_t expected = 17;
+  EXPECT_EQ(expected, res);
 }
 
-TEST(sumPrimeTest, sumBelow2000000) {
+TEST(st1, sumPrime_medium) {
+  EXPECT_EQ(1060u, sumPrime(100));
+  EXPECT_EQ(328u, sumPrime(50));
+}
+
+TEST(st1, sumPrime1) {
+  uint64_t res = sumPrime(2000000);
   uint64_t expected = 142913828922;
-  EXPECT_EQ(expected, sumPrime(2000000));
+  EXPECT_EQ(expected, res);
 }
